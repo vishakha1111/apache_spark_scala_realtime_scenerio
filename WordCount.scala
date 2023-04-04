@@ -16,7 +16,17 @@ object WordCount extends App {
   
   val finalCount = wordMap.reduceByKey((x,y) => x + y )
   
-  finalCount.collect.foreach(println)
+  val reversedTuple = finalCount.map(x => (x._2, x._1))
+  
+  val sortedresults = reversedTuple.sortByKey(false).map(x => (x._2, x._1))
+  
+  val results = sortedresults.collect
+  
+  for(result <- results){
+    val word = result._1
+    val count = result._2
+    println(s"$word : $count")
+  }
     
   scala.io.StdIn.readLine()
 }
